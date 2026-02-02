@@ -10,9 +10,11 @@
             margin: 0;
         }
         body{
-                         background-color: blueviolet;/
+                         background-color: blueviolet;
         }
-
+        h1{
+            color: coral;
+        }
         #board{
             width: 100vw;
             height: 50vh;
@@ -24,6 +26,10 @@
          width: 23%;
          border: solid;
          background-color: brown;
+        }
+        @media(max-width:700px){
+            #board{height: 100vh; display: flex; flex-direction: column;}
+            .card{width: 100vw;height: 20vh;}
         }
      </style>
 </head>

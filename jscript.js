@@ -6,35 +6,60 @@ const board = document.getElementById("board")
 const all = document.getElementById("all")
 
 function search(collection) {
-      
+
     const input = document.createElement("input")
     input.name = "input"
     const lable = document.createElement("label")
     const text = document.createTextNode("search: ")
     lable.appendChild(text)
     lable.setAttribute("for", "input")
- 
-    input.addEventListener("input", () => {
-    
-        
-        for (let div of collection) {
-            console.log(div);
-            
-            // let text = input.value           
-            for (let i = 0; i < text.length; i++) {
 
-                
-                // console.log(div,div.textContent[i] ,text[i]);
-                
-                if (div.textContent[i] !== text[i]) {
-                   div.remove()
-                   collection.splice(collection.indexOf(div),1)
+    input.addEventListener("input", () => {
+        const value = input.value
+        let time = collection.length
+        for (let i = 0; i < value.length; i++) {
+            for (let j = 0; j < time; j++) {
+                if (collection[j].textContent[i].toLowerCase() !== value[i].toLowerCase()) {
+                    collection[j].remove()
                 }
             }
         }
     })
     all.appendChild(lable)
     all.appendChild(input)
+}
+
+function button(collection) {
+    const text = document.createTextNode("color canch")
+    const button = document.createElement("button")
+    button.appendChild(text)
+    let count = 0
+    let backgcolor
+    let color
+    button.addEventListener("click", () => {
+
+        if (count % 2 === 0) {
+            backgcolor = "white"
+            color = "black"
+        } else {
+            backgcolor = "black"
+            color = "white"
+        }
+        for (let div of collection) {
+            div.style.background = backgcolor
+            div.style.color = color
+        }
+        count++
+        localStorage.setItem("color",color)
+        localStorage.setItem("backgcolor",backgcolor)
+    })
+    if(localStorage.getItem("color") !== null){
+        for (let div of collection) {
+            div.style.background = localStorage.getItem("backgcolor")
+            div.style.color = localStorage.getItem("color","black")
+        }
+    }
+    board.appendChild(button)
 }
 
 async function createTerms() {
@@ -66,6 +91,7 @@ async function createTerms() {
                     arr.push(div)
                 }
                 search(arr)
+                button(collection)
             }
 
 
